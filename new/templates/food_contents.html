@@ -1,0 +1,774 @@
+<!--記得註釋--> 
+<!DOCTYPE html>
+<meta name="viewport" content="user-scalable=no">
+<html>
+
+<head>
+	<title id="recipe_name">食譜目錄</title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		 /*統一規範*/
+        body{
+            font-family: 'Noto Sans TC';
+        }
+
+        #main-cut{
+            position:absolute;
+            overflow-y: scroll;
+            height:91vh;
+        }
+
+        /*header設定*/
+        #header{
+            height:9vh;
+            width:100vw;
+            display:flex;
+            flex-direction:row;
+            justify-content:start;
+            align-items:center;
+            box-shadow:2px 2px 2px 2px #cccccc;
+            opacity:0.9;
+        }
+
+        #undo{
+            margin-left:40px;
+            margin-right:270px;
+        }
+
+        #head_font{
+            font-size:65px;
+        }
+
+        /*區塊範例*/
+        #Contents{
+        	overflow-y:scroll;
+        	overflow-x:hidden;
+            display:flex;
+            flex-direction:column;
+            justify-content:start;
+            align-items:center;
+            width:99vw;
+        }
+
+        #unite_font{
+            margin-left:20px;
+            font-size:50px;
+        }
+
+        /*側邊選單*/
+        #side-menu-frame{
+            position:absolute;
+            display:flex;
+            flex-direction:row;
+            justify-content:start;
+            height:91vh;
+        }
+
+        #side-menu{
+			width:30vw;
+			height:100%;
+			background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+			display:none;
+			flex-direction:column;
+			align-items:center;
+			box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+		}
+
+        #side-menu nav a{
+            display:block;
+            padding:30px;
+            color:#FCFCFC;
+            text-decoration:none;
+            font-size:30px;
+            border-bottom:outset;
+            border-color:#FCFCFC;
+        }
+
+        #side-paste{
+            width:70vw;
+            height:100%;
+            background-color:#6C6C6C;
+            display:none;
+            opacity:0.4;
+        }
+
+
+        /*主要區塊*/
+        .main_frame{
+        	overflow-x:scroll;
+        	overflow-y:hidden;
+			height:430px;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:50px;
+		}
+
+		#main_hd{
+			width:95%;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			margin-bottom:5px;
+			margin-left:15px;
+			font-size:50px;
+			color:#4F4F4F;
+		}
+
+		#search-wrap{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items:center;
+		}
+
+		.food_p{
+			width:400px;
+			height:300px;
+			border-radius:15px;
+			margin-top:30px;
+			margin-bottom:30px;
+			margin-right:30px;
+			margin-left:30px;
+		}
+
+		#more_wrap{
+			width:100px;
+			height:300px;
+			display:flex;
+			flex-direction:column;
+			justify-content:end;
+			align-items:end;
+		}
+
+		#more{
+			text-decoration:underline;
+			margin-bottom:10px;
+			font-size:20px;
+		}
+
+		#main_hd{
+			color:#D0A84E;
+			font-size:45px;
+		}
+
+		#formal_input {
+            height: 80px;
+            width: 850px;
+            margin-bottom:20px;
+            margin-top:20px;
+            border-style: solid;
+            font-size: 35px;
+            font-family: 'Noto Sans TC';
+            border-radius: 50px;
+            border-color: #D0A84E;
+            padding-left:10px;
+        }
+        
+        #formal_input::placeholder {
+            color:#D0A84E;
+            padding-left:10px;
+        }
+
+        #searc{
+        	font-size:40px;
+        	margin-left:-100px;
+        	color:#9D9D9D;
+        }
+
+        #imgW{
+        	display:flex;
+        	flex-direction:column;
+        	justify-content:center;
+        	align-items:center;
+        }
+
+        .imgWOrd{
+        	font-size:30px;
+        	color:#4F4F4F;
+        	margin-top:-20px;
+        }
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+	<!--jquery-->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+</head>
+
+<body style="background-color:#F0F0F0">
+	<div id="header" style="background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);">
+		<i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+		<div id="head_font" style="color:#FCFCFC">食譜目錄</div>
+	</div>
+	
+	<div id="main-cut">
+		<div id="search-wrap">
+			<form class="header-search">
+				<input id="formal_input" type="text" name="account" placeholder="搜尋料理...">
+				<i class="fa fa-search" id="searc"></i>
+			</form>
+		</div>
+
+		<div id="Contents">	
+			<div id="main_hd">中式料理</div>
+			<div class="main_frame" id="frame1">
+			</div>
+			<div id="main_hd">日式料理</div>
+			<div class="main_frame" id="frame2">
+			</div>
+			<div id="main_hd">早餐輕食</div>
+			<div class="main_frame" id="frame3">
+			</div>
+			<div id="main_hd">東南亞料理</div>
+			<div class="main_frame" id="frame4">
+			</div>
+			<div id="main_hd">湯品</div>
+			<div class="main_frame" id="frame5">
+			</div>
+			<div id="main_hd">甜點點心</div>
+			<div class="main_frame" id="frame6">
+			</div>
+			<div id="main_hd">西式料理</div>
+			<div class="main_frame" id="frame7">
+			</div>
+			<div id="main_hd">韓式料理</div>
+			<div class="main_frame" id="frame8">
+			</div>
+		</div>
+	</div>
+	<div id="side-menu-frame">
+		<div id="side-menu">
+			<nav>
+				<a href="http://140.119.19.13/home">
+					<i class="fas fa-home"></i>
+					首頁
+				</a>
+				<a href="http://140.119.19.13/food_contents">
+					<i class="fas fa-book"></i>
+					食譜目錄
+				</a>
+				<a href="http://140.119.19.13/Ingredient_contents">
+					<i class="fas fa-fish"></i>
+					食材目錄
+				</a>
+				<a href="http://140.119.19.13/personal_page">
+					<i class="fas fa-user-alt"></i>
+					個人頁面
+				</a>
+				<a href="http://140.119.19.13/share_page">
+					<i class="fas fa-share-square"></i>
+					分享食譜
+				</a>
+				<a href="http://140.119.19.13/book_page">
+					<i class="fas fa-shopping-cart"></i>
+					待買清單
+				</a>
+			</nav>
+		</div>
+		<div id="side-paste">
+
+		</div>
+	</div>	
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+<script>
+	//變數區
+	let word1 = document.getElementById('unite1_font');
+	let word2 = document.getElementById('unite2_font');
+
+	var firebaseConfig = {
+	    apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+	    authDomain: "test-4fa88.firebaseapp.com",
+	    databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+	    projectId: "test-4fa88",
+	    storageBucket: "test-4fa88.appspot.com",
+	    messagingSenderId: "951903532283",
+	    appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+	    measurementId: "G-NSP6DRS2MS"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+
+	var db=firebase.firestore();
+
+	//搜尋功能
+	document.getElementById('searc').addEventListener('click', function() {
+		if (document.getElementById('formal_input').value == ""){
+			alert("您尚未輸入任何內容")
+		}
+		else{
+			db.collection("food_Index").doc("1").get().then((doc) => {
+				var array= eval(doc.data()["array"]);
+				var content= document.getElementById('formal_input');
+				for (var i = 0; i < array.length; i++){
+	  				if (content.value==array[i][0].toString()){
+	  					document.location.href = "http://140.119.19.13/food_page/"+array[i][1].toString()+"/"+array[i][2].toString();
+	  					break;
+	  				}
+	  				if (i==array.length-1){
+	  					document.location.href = "http://140.119.19.13/food_page/error/02";
+	  					break;
+	  				}
+				}
+			});
+
+			
+		}
+		
+	});
+
+	//食譜圖案	
+	let frame1 = document.getElementById('frame1');
+	let frame2 = document.getElementById('frame2');
+	let frame3 = document.getElementById('frame3');
+	let frame4 = document.getElementById('frame4');
+	let frame5 = document.getElementById('frame5');
+	let frame6 = document.getElementById('frame6');
+	let frame7 = document.getElementById('frame7');
+	let frame8 = document.getElementById('frame8');
+
+
+
+	db.collection("食譜").doc("02").collection("中式料理").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("中式料理").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/中式料理/"+emptyA;
+				});
+				
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("中式料理").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame1.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame1.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("日式料理").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("日式料理").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/日式料理/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("日式料理").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame2.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame2.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("早餐輕食").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("早餐輕食").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/早餐輕食/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("早餐輕食").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame3.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame3.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("東南亞料理").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("東南亞料理").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/東南亞料理/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("東南亞料理").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame4.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame4.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("湯品").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("湯品").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/湯品/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("湯品").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame5.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame5.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("甜點點心").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("甜點點心").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/甜點點心/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("甜點點心").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame6.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame6.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("西式料理").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("西式料理").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/西式料理/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("西式料理").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame7.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame7.appendChild(div);
+    });
+
+    db.collection("食譜").doc("02").collection("韓式料理").get().then(snap => {
+        for(i=2;i<=snap.size;i++){
+			(function(x) {
+
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				console.log(emptyA);
+
+				var div = document.createElement("div");
+			    div.setAttribute("id", "imgW");
+			    
+
+			    var img = document.createElement("img");
+			    db.collection("食譜").doc("02").collection("韓式料理").doc(emptyA).collection("link").doc("01").get().then(function(doc){
+        			if (doc.exists) {
+						img.setAttribute("src",  doc.data()["LINK"]);
+			    		img.setAttribute("class", "food_p");
+	    			}
+				})
+
+				img.addEventListener('click',function(){
+					document.location.href = "http://140.119.19.13/food_page/韓式料理/"+emptyA;
+				});
+
+			    var div2 = document.createElement("div");
+			    db.collection("食譜").doc("02").collection("韓式料理").doc(emptyA).get().then(function(doc){
+        			if (doc.exists) {
+						div2.innerHTML=doc.data()["name"];
+						div2.setAttribute("class", "imgWOrd");
+	    			}
+				})
+			    
+
+			    div.appendChild(img);
+			    div.appendChild(div2);
+	    		frame8.appendChild(div);
+			})(i)
+		}
+		var div = document.createElement("div");
+		div.setAttribute("id", "more_wrap");
+		frame8.appendChild(div);
+    });
+
+
+        //選單彈出
+        let undo = document.getElementById('undo');
+        let side_menu = document.getElementById('side-menu');
+        let side_paste = document.getElementById('side-paste');
+        let click_count = 0;
+        undo.addEventListener('click', function() {
+            if (click_count % 2 == 0) {
+                side_menu.style.cssText = 'display:flex';
+                side_paste.style.cssText = 'display:flex';
+            }
+
+            if (click_count % 2 == 1) {
+                side_menu.style.cssText = 'display:none';
+                side_paste.style.cssText = 'display:none';
+            }
+
+            click_count = click_count + 1;
+        });
+
+        side_paste.addEventListener('click', function() {
+            side_menu.style.cssText = 'display:none';
+            side_paste.style.cssText = 'display:none';
+            click_count = click_count + 1;
+        });
+
+	
+</script>
+</html>

@@ -1,0 +1,12 @@
+cd desktop/new
+.\\venv\\scripts\\activate
+flask run -h 140.119.19.13 -p 80
+flask run --host=0.0.0.0 -p 80
+
+app.py
+
+http://140.119.19.13
+http://140.119.19.13/food_contents
+http://140.119.19.13/Ingredient_contents
+http://140.119.19.13/food_page/%E4%B8%AD%E5%BC%8F%E6%96%99%E7%90%86/03
+http://140.119.19.13/book_page

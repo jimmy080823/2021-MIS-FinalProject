@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<meta name="viewport" content="user-scalable=no">
+<html>
+<head>
+	<title id="recipe_name"></title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		/*統一規範*/
+		body{
+			font-family: 'Noto Sans TC';
+		}
+
+		#main-cut{
+			position:absolute;
+            overflow-y: scroll;
+            height:91vh;
+		}
+
+		/*header設定*/
+		#header{
+			height:9vh;
+			width:100vw;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			box-shadow: 0px 4px 4px rgba(173, 173, 173, 0.25);
+			opacity:0.9;
+		}
+
+		#head_font{
+			font-size:65px;
+		}
+
+		/*圖片部分*/
+		#picture_flex{
+			margin-top:20px;
+			height:31.5vh;
+			display:flex;
+			flex-direction:column;
+			justify-content:flex-start;
+			align-items:center;
+		}
+
+		#picture_frame{
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			margin-bottom:20px;
+			box-shadow: 0px 4px 4px rgba(173, 173, 173, 0.25);
+			padding-top:5px;
+			padding-right:5px;
+			padding-left:5px;
+			padding-bottom:5px;
+		}
+
+		#lazy_slider{
+			width:940px;
+			height:500px;
+			margin-top:5px;
+			margin-right:2px;
+			margin-left:2px;
+			margin-bottom:5px;
+		}
+
+		/*主要頁面部分排版*/
+		#Contents{
+			display:flex;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			width:100vw;
+		}
+
+		/*微型選單部分*/
+		#small_menu_frame{
+			height:6vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			margin-top:40px;
+			margin-bottom:20px;
+			box-shadow: 0px 4px 4px rgba(173, 173, 173, 0.25);
+		}
+
+		#small_menu_unite1{
+			margin-right:10px;
+			margin-left:10px;
+			font-size: 40px;
+			padding-bottom:15px;
+			padding-left:10px;
+			padding-right:10px;
+			padding-top:10px;
+			margin-bottom:5px;
+			border-bottom-style:outset;
+			border-width:4px;
+			color:#FF9224;
+			border-color:#FF9224;
+		}
+
+		#small_menu_unite2{
+			margin-right:10px;
+			margin-left:10px;
+			font-size: 40px;
+			padding-bottom:15px;
+			padding-left:10px;
+			padding-right:10px;
+			padding-top:10px;
+			margin-bottom:5px;
+			border-width:4px;
+			border-bottom-style:none;
+			border-color:#FF9224;
+		}
+
+		/*主要頁面文字區域*/
+		#main_word_frame1{
+			overflow-y:scroll;
+			background-color:#FCFCFC;
+			height:47vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:20px;
+			box-shadow: 0px 4px 4px rgba(173, 173, 173, 0.25);
+		}
+
+		#main_word_frame2{
+			overflow-y:scroll;
+			background-color:#FCFCFC;
+			height:47vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:none;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:20px;
+			box-shadow: 0px 4px 4px rgba(173, 173, 173, 0.25);
+		}
+
+		#formula{
+			border-bottom-style:outset;
+			border-width:0.1px;
+			border-color:#F0F0F0;
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			width:85%;
+			padding-top:40px;
+			padding-bottom:40px;
+		}
+
+		#formula_font{
+			font-size:30px;
+			margin-left:10px;
+			width:90%;
+		}
+
+		#box{
+		  	height:50px;
+		  	width:50px;
+		}
+
+		#myButton{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items:center;
+			width:300px;
+			height:70px;
+			box-shadow: 3px 4px 0px 0px #EA7500;
+			background-color:#FF9224;
+			border-radius:5px;
+			border:1px solid #FF9224;
+			cursor:pointer;
+			color:#ffffff;
+			font-size:40px;
+			padding:7px 25px;
+			margin-left:130px;
+			margin-right:130px;
+			margin-top:30px;
+			margin-bottom:30px;
+		}
+
+		/*側邊選單*/
+		#side-menu-frame{
+			position:absolute;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			height:91vh;
+		}
+
+		#side-menu{
+			width:30vw;
+			height:100%;
+			background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+			display:none;
+			flex-direction:column;
+			align-items:center;
+			box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+		}
+
+		#side-menu nav a{
+			display:block;
+			padding:30px;
+			color:#FCFCFC;
+			text-decoration:none;
+			font-size:30px;
+			border-bottom:outset;
+			
+		}
+
+		#side-paste{
+			width:70vw;
+			height:100%;
+			background-color:#6C6C6C;
+			display:none;
+			opacity:0.4;
+		}
+
+		/*愛心*/
+		#decorate_frame{
+			border-style:solid;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			width:80px;
+			height:80px;
+			border-radius:50%;
+			border-color:#BEBEBE;
+			background-color:#FCFCFC;
+			border-width: 3px;
+			margin-left:44%;
+		}
+
+		#heart{
+			display:none;
+			font-size:60px;
+			color:#FF0000;
+		}
+
+		#e_heart{
+			font-size:60px;
+			color:#BEBEBE;
+		}
+
+		#part1{
+			display:flex;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			border-style:none;
+			width:95%;
+		}
+
+		#lazy{
+			display:flex;
+			justify-content:center;
+			align-items:center;
+		}
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+	<!--jquery-->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+</head>
+
+<body style="background-color:#F0F0F0">
+	<div id="header" style="background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%); display:flex; align-items:center; justify-content:center;">
+		<i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+		<div style="display:flex; align-items:center; justify-content:center; width:80%;">
+			<div id="head_font" style="color:#FCFCFC; font-weight:bold;"></div>
+		</div>
+		<i class="fas fa-undo" id="undo1" style="color:#FCFCFC; font-size:50px;"></i>
+	</div>
+	
+	<div id="food_name" style="display:none; visibility:hidden;">{{food_name}}</div>
+	<div id="food_num" style="display:none; visibility:hidden;">{{food_num}}</div>
+
+	<div id="main-cut">
+		<div id="picture_flex">	
+			<div id="picture_frame" style="background-color:#FCFCFC;">
+				<section id="lazy">
+	  			</section>
+			</div>
+		</div>
+
+		<div id="Contents">	
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="small_menu_unite1"><div id="unite1_font" style="font-weight:bold;">主要食材</div></div>
+				<div id="small_menu_unite2"><div id="unite2_font" style="font-weight:bold;">烹飪步驟</div></div>
+				<div id="decorate_frame">
+					<i id="heart" class="fas fa-heart"></i>
+					<i id="e_heart" class="far fa-heart"></i>
+				</div>
+			</div>
+
+			<form method="post" action="" id="main_word_frame1">
+				<div id="part1"></div>
+				<div id="part2">
+					<div id="myButton">加入待買清單</div>
+				</div>
+			</form>
+
+			<div id="main_word_frame2">
+			</div>
+		</div>
+	</div>
+
+	<div id="side-menu-frame">
+		<div id="side-menu">
+			<nav>
+				<a href="http://140.119.19.13/home">
+					<i class="fas fa-home"></i>
+					首頁
+				</a>
+				<a href="http://140.119.19.13/food_contents">
+					<i class="fas fa-book"></i>
+					食譜目錄
+				</a>
+				<a href="http://140.119.19.13/Ingredient_contents">
+					<i class="fas fa-fish"></i>
+					食材目錄
+				</a>
+				<a href="http://140.119.19.13/personal_page">
+					<i class="fas fa-user-alt"></i>
+					個人頁面
+				</a>
+				<a href="http://140.119.19.13/share_page">
+					<i class="fas fa-share-square"></i>
+					分享食譜
+				</a>
+				<a href="http://140.119.19.13/book_page">
+					<i class="fas fa-shopping-cart"></i>
+					待買清單
+				</a>
+			</nav>
+		</div>
+		<div id="side-paste">
+
+		</div>
+	</div>	
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+<script>
+	//回上一頁
+	document.getElementById('undo1').addEventListener('click', function()
+	{
+		history.back();
+	});
+	//變數區
+	let word1 = document.getElementById('unite1_font');
+	let word2 = document.getElementById('unite2_font');
+
+	let word_frame1 = document.getElementById('main_word_frame1');
+	let word_frame2 = document.getElementById('main_word_frame2');
+
+	var firebaseConfig = {
+	    apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+	    authDomain: "test-4fa88.firebaseapp.com",
+	    databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+	    projectId: "test-4fa88",
+	    storageBucket: "test-4fa88.appspot.com",
+	    messagingSenderId: "951903532283",
+	    appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+	    measurementId: "G-NSP6DRS2MS"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+
+	var db=firebase.firestore();
+
+	//接收區
+	let recipe_name = document.getElementById('recipe_name');
+	db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).get().then(function(doc){
+        if (doc.exists) {
+			document.getElementById('head_font').innerHTML=doc.data()["name"];
+			recipe_name.innerHTML=doc.data()["name"];
+	    }
+	})
+
+	db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("link").doc("01").get().then(function(doc){
+        if (doc.exists) {
+			var div = document.createElement("div");
+			var img = document.createElement("img");
+			img.setAttribute("src",  doc.data()["LINK"]);
+			img.setAttribute("width", "900px");
+			img.setAttribute("height", "500px");
+			div.appendChild(img);
+			document.getElementById('lazy').appendChild(div);
+	    }
+	})
+
+	let part1 = document.getElementById("part1");
+	let part2 = document.getElementById("part2");
+	db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("ingredients").get().then(snap => {
+		for(i=1;i<=snap.size;i++){
+			(function(x) {
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("ingredients").doc(emptyA).get().then(function(doc){
+						var div = document.createElement("div");
+						div.setAttribute("id", "formula");
+						var div1 = document.createElement("div");
+						div1.setAttribute("id", "formula_font");
+						div1.innerHTML=doc.data()["food"];
+						var input = document.createElement("input");
+						input.setAttribute("type", "checkbox");
+						input.setAttribute("id", "box");
+						input.setAttribute("name", "message");
+						input.setAttribute("value", doc.data()["food"]);
+
+						div.appendChild(div1);
+						div.appendChild(input);
+						part1.appendChild(div);
+					});
+				})(i)
+			}
+	});
+
+	db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("ingredients_EXTRA").get().then(snap => {
+		for(i=2;i<=snap.size;i++){
+			(function(x) {
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("ingredients_EXTRA").doc(emptyA).get().then(function(doc){
+						var div = document.createElement("div");
+						div.setAttribute("id", "formula");
+						var div1 = document.createElement("div");
+						div1.setAttribute("id", "formula_font");
+						div1.setAttribute("style", "width:100%; margin-left:10px;");
+						div1.innerHTML=doc.data()["food"];
+
+						div.appendChild(div1);
+						part1.appendChild(div);
+					});
+				})(i)
+			}
+	});
+
+	db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("steps").get().then(snap => {
+		for(i=1;i<=snap.size;i++){
+			(function(x) {
+				var emptyA=""
+				if (x<10){
+					emptyA="0"+x.toString();
+				}
+
+				else{
+					emptyA=x.toString();
+				}
+
+				db.collection("食譜").doc("02").collection(document.getElementById('food_name').innerHTML.toString()).doc(document.getElementById('food_num').innerHTML.toString()).collection("steps").doc(emptyA).get().then(function(doc){
+						var div = document.createElement("div");
+						div.setAttribute("id", "formula");
+						var div1 = document.createElement("div");
+						div1.setAttribute("id", "formula_font");
+						var b = document.createElement("b");
+						b.setAttribute("style", "line-height:100px;");
+						b.innerHTML="第"+x.toString()+"步.<br>";
+						var div2 = document.createElement("div");
+						div2.innerHTML=doc.data()["step"];
+						div1.appendChild(b);
+						div1.appendChild(div2);
+						div.appendChild(div1);
+						word_frame2.appendChild(div);
+					});
+				})(i)
+			}
+	});
+
+
+	//其他區
+	let block1_trigger = document.getElementById('small_menu_unite1');
+	let block2_trigger = document.getElementById('small_menu_unite2');
+	block1_trigger.addEventListener('click', function()
+	{
+		word1.style.color = '#FF9224';
+		word2.style.color = '#000000';
+		block1_trigger.style.cssText = 'border-bottom-style:outset;';
+		block2_trigger.style.cssText  = 'border-bottom-style:none;';
+		word_frame1.style.cssText  = 'display:flex';
+		word_frame2.style.cssText  = 'display:none';
+	});
+
+	block2_trigger.addEventListener('click', function()
+	{
+		word1.style.color = '#000000';
+		word2.style.color = '#FF9224';
+		block1_trigger.style.cssText  = 'border-bottom-style:none;';
+		block2_trigger.style.cssText  = 'border-bottom-style:outset;';
+		word_frame1.style.cssText  = 'display:none';
+		word_frame2.style.cssText  = 'display:flex';
+	});
+
+        //選單彈出
+        let undo = document.getElementById('undo');
+        let side_menu = document.getElementById('side-menu');
+        let side_paste = document.getElementById('side-paste');
+        let click_count = 0;
+        undo.addEventListener('click', function() {
+            if (click_count % 2 == 0) {
+                side_menu.style.cssText = 'display:flex';
+                side_paste.style.cssText = 'display:flex';
+            }
+
+            if (click_count % 2 == 1) {
+                side_menu.style.cssText = 'display:none';
+                side_paste.style.cssText = 'display:none';
+            }
+
+            click_count = click_count + 1;
+        });
+
+        side_paste.addEventListener('click', function() {
+            side_menu.style.cssText = 'display:none';
+            side_paste.style.cssText = 'display:none';
+            click_count = click_count + 1;
+        });
+
+	//傳送cookie
+
+	let current_num;
+	if(Cookies.get("number") == undefined){
+		current_num=1;
+		Cookies.set("number", current_num.toString());
+	}
+	else{
+		current_num = Cookies.get("number");
+	}
+
+
+	let myButton=document.getElementById("myButton");
+	myButton.addEventListener('click', function()
+	{
+		let message=document.getElementsByName("message");
+		let len = message.length;
+		console.log(message)
+		for (i = 0; i < len; i++){
+			if (message[i].checked == true)
+            {
+				console.log(message[i].value);
+                var messageV=(message[i].value).split("：")
+            	console.log(messageV);
+                Cookies.set("test"+current_num.toString(), (messageV[0]).toString());
+                Cookies.set("recipe"+current_num.toString(), (recipe_name.innerHTML).toString()+":"+messageV[1]);
+                current_num=parseInt(current_num)+1;
+                Cookies.set('number', current_num.toString());
+            }
+		}
+		alert("已成功將您選的食材加入代買清單");
+	});
+	Cookies.set('testH', 'Hello');
+	var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)test2\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+	//愛心
+	let heart = document.getElementById('heart');
+	let e_heart = document.getElementById('e_heart');
+	let decorate_frame = document.getElementById('decorate_frame');
+	let heart_click=0;
+	decorate_frame.addEventListener('click', function()
+	{
+		if (Cookies.get('acc') == null || Cookies.get('acc') == ""){
+	        alert("您尚未登入，無法使用收藏功能");
+        } 
+        else{
+        	heart_click=heart_click+1;
+			if (heart_click%2==0){
+				heart.style.cssText  = "display:none;"
+				e_heart.style.cssText  = "display:flex;"
+			}
+			else{
+				heart.style.cssText  = "display:flex;"
+				e_heart.style.cssText  = "display:none;"
+			}
+        }
+	});
+
+	e_heart.addEventListener('click', function()
+	{
+		
+		if (Cookies.get('acc') == null || Cookies.get('acc') == ""){
+	        alert("您尚未登入，無法使用收藏功能");
+        } 
+		else{
+			db.collection('測試').doc(Cookies.get('acc')).collection('收藏').get().then(snap => {
+	            if (heart_click%2==1){
+				        heart.style.cssText  = "display:flex;"
+				        let kpork1 = 0;
+				        kpork1 = snap.size+1;
+		   		        console.log(kpork1);
+			            db.collection('測試').doc(Cookies.get('acc')).collection('收藏').doc(kpork1.toString()).set({
+	                        num: document.getElementById('food_num').innerHTML.toString(),
+	                        part: document.getElementById('food_name').innerHTML.toString(),
+	                    });
+			    };
+		   	});
+		   	alert("收藏成功");
+		}
+		
+    });
+</script>
+
+</html>

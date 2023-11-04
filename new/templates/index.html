@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta name="viewport" content="user-scalable=no">
+
+<html>
+<head>
+	<title>宅生活</title>
+	<style>
+		body {
+            font-family: Roboto;
+        }
+
+		#wrap{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items:center;
+		}
+
+		#but{
+			margin-top:500px;
+			font-size:50px;
+			font-weight:bold;
+			color:#D0A84E;
+			border-bottom:0.5rem solid;
+			padding-bottom:15px;
+		}
+	</style>
+</head>
+<body style="background-image: url('https://firebasestorage.googleapis.com/v0/b/test-4fa88.appspot.com/o/2021-10-19_03-25-08.png?alt=media&token=9b41ade6-d4dd-429a-9e3c-cae0c4cb8480'); background-size:100vw 100vh;">
+	<div id="wrap">
+		<img src="https://firebasestorage.googleapis.com/v0/b/test-4fa88.appspot.com/o/01232%2Flogo-removebg-preview.png?alt=media&token=63894b09-9a8e-490f-8881-352efa703aaf" style="width:800px; height:800px; margin-top:100px;">
+		<div id="but">我們開始吧 !</div>
+	</div>
+</body>
+<script>
+	document.getElementById('but').addEventListener('click', function() {
+		document.location.href = "http://140.119.19.13/home";
+	});
+</script>
+</html>
